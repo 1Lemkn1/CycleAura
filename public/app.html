@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>CycleAura — автономная версия</title>
+    <meta name="description" content="CycleAura: автономный календарь цикла. Данные только в этом файле и в вашем браузере." />
+    <style>
+      body { margin: 0; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; background: radial-gradient(circle at top, #ffe5ec, #fff7ed 55%, #fee2e2); }
+      #root { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 24px; }
+      .card { max-width: 420px; width: 100%; background: #fff9fb; border-radius: 24px; padding: 20px 22px; box-shadow: 0 20px 45px rgba(214, 90, 130, 0.18); }
+      h1 { margin: 0 0 4px; font-size: 22px; color: #7a4b63; }
+      p { margin: 6px 0; font-size: 13px; color: #8a7482; line-height: 1.7; }
+      button { display: inline-flex; align-items: center; justify-content: center; padding: 9px 16px; border-radius: 999px; border: 0; background: linear-gradient(110deg, #d9789b, #eaa292); color: white; font-weight: 600; font-size: 13px; cursor: pointer; margin-top: 10px; }
+      button:active { transform: translateY(1px); }
+      input { width: 100%; margin-top: 8px; padding: 7px 10px; border-radius: 12px; border: 1px solid #f0d4df; font-size: 13px; }
+      small { display: block; margin-top: 10px; font-size: 11px; color: #a18897; }
+    </style>
+  </head>
+  <body>
+    <div id="root">
+      <div class="card">
+        <h1>CycleAura (автономная версия)</h1>
+        <p>Это упрощённая версия без интернета и без сервера. Записи хранятся только в этом браузере и в этом файле.</p>
+        <p>Чтобы сохранить резервную копию, скопируйте содержимое поля ниже и сохраните его в заметки или файл.</p>
+        <textarea id="backup" rows="6" readonly></textarea>
+        <button type="button" onclick="saveBackup()">Скопировать резервную копию</button>
+        <small>Полная версия приложения доступна по адресу cycleaura.vercel.app. Автономная страница не обновляется автоматически.</small>
+      </div>
+    </div>
+    <script>
+      function load() {
+        try {
+          const raw = localStorage.getItem("lunacare-data-v1") || "{}";
+          document.getElementById("backup").value = raw;
+        } catch (e) {
+          document.getElementById("backup").value = "{}";
+        }
+      }
+      function saveBackup() {
+        var textarea = document.getElementById("backup");
+        textarea.focus();
+        textarea.select();
+        document.execCommand("copy");
+      }
+      load();
+    </script>
+  </body>
+</html>
