@@ -10,6 +10,9 @@ const __dirname = path.dirname(__filename);
 
 // https://vite.dev/config/
 export default defineConfig({
+  // Относительные пути: сборка открывается и из корня домена, и из подпапки
+  // проекта на GitHub Pages.
+  base: "./",
   build: {
     rollupOptions: {
       input: {

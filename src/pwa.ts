@@ -7,10 +7,16 @@ const SW_PATH = `${import.meta.env.BASE_URL}sw.js`;
 export function registerServiceWorker() {
   if (!import.meta.env.PROD) return;
   if (typeof window === "undefined" || !("serviceWorker" in navigator)) return;
+  if (!window.isSecureContext) return;
 
   window.addEventListener("load", () => {
-    navigator.serviceWorker.register(SW_PATH).catch(() => {
-      // Offline support is a bonus: a failed registration must never break the app.
-    });
+    navigator.serviceWorker
+      // scope и updateViaCache важны для установки из подпапки (GitHub Pages):
+      // воркер должен обновляться мимо HTTP-кеша и управлять своей папкой.
+      .register(SW_PATH, { scope: "./", updateViaCache: "none" })
+      .then((registration) => registration.update().catch(() => undefined))
+      .catch(() => {
+        // Offline support is a bonus: a failed registration must never break the app.
+      });
   });
 }
