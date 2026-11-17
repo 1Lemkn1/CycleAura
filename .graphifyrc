@@ -1,0 +1,4 @@
+# Настройки graphify для этого проекта.
+# query_budget — сколько токенов отдавать в ответе, query_depth — глубина BFS (1-6).
+query_budget=1500
+query_depth=2
